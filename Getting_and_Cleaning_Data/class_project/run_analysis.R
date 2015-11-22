@@ -15,12 +15,14 @@ library(plyr)
 # http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 #
 # mergeDataset - function
-#   Arguments:  trainDir - path to the directory where the training data set for the 
+#   The mergeDataset will attempt to find the necessary data files in the current working
+#   directory.  If the data is somewhere else, you can specify the locations as necessary
+#   Arguments:  trainDir (optional) - path to the directory where the training data set for the 
 #                           UCI Human Activity Recognition project
-#               testDir - path to the directory where the test data set is
-#               featuresFile - path to the features file detailing all the features
+#               testDir (optional) - path to the directory where the test data set is
+#               featuresFile (optional) - path to the features file detailing all the features
 #                               in the data file set
-#               activityLabelFile - path to the file that lists all the activities 
+#               activityLabelFile (optional) - path to the file that lists all the activities 
 #                                   performed by the subjects in the study
 #
 #   Returns:    A data frame that has been properly formated with combined data from
@@ -31,38 +33,89 @@ library(plyr)
 #               The data frame will also be subsetted to include the mean and 
 #               standard deviation values in the original data set, and have all activities
 #               labeled descriptively
-mergeDataset <- function(trainDir, testDir, featuresFile = NULL, activityLabelFile = NULL) {
+mergeDataset <- function(trainDir = NULL, testDir = NULL, featuresFile = NULL, activityLabelFile = NULL) {
+    if (is.null(trainDir)) {
+        # If the path to the train data directory was not passed in, assume the train data 
+        # set is in the current working directory and try to find the feature file
+        trainDir <- file.path("UCI HAR Dataset","train")
+        if (!file.exists(trainDir)) {
+            # Try directly in current directory
+            trainDir <- file.path("train")
+            if (!file.exists(trainDir)) {
+                stop("train directory could not be found in the current working directory. 
+                     trainDir argument can be specified, to identify the path to the directory 
+                     containing the training data set.")
+            }
+        }
+    }
+    if (is.null(testDir)) {
+        # If the path to the train data directory was not passed in, assume the train data 
+        # set is in the current working directory and try to find the feature file
+        testDir <- file.path("UCI HAR Dataset","test")
+        if (!file.exists(testDir)) {
+            # Try directly in current directory
+            testDir <- file.path("test")
+            if (!file.exists(testDir)) {
+                stop("test directory could not be found in the current working directory. 
+                     testDir argument can be specified, to identify the path to the directory 
+                     containing the training data set.")
+            }
+        }
+    }    
     if (is.null(featuresFile)) {
-        stop("featuresFile argument is required.  Should be the path to the file 
-             detailing the features of the data set")
+        # If the path to the featuresFile was not passed in, assume the data set
+        # is in the current working directory and try to find the feature file
+        featuresFile <- file.path("UCI HAR Dataset","features.txt")
+        if (!file.exists(featuresFile)) {
+            # Try directly in current directory
+            featuresFile <- file.path("features.txt")
+            if (!file.exists(featuresFile)) {
+                stop("features.txt could not be found in the current working directory. 
+                featuresFile argument can be specified, to identify the path to the file 
+                detailing the features in the data set.")
+            }
+        }
     }
     if (is.null(activityLabelFile)) {
-        stop("activityLabelFile argument is required.  Should be the path to the file 
-             detailing the activities performed by the subjects in the data set")
+        # If the path to the activityLabelFile was not passed in, assume the data set
+        # is in the current working directory and try to find the activity label file       
+        activityLabelFile <- file.path("UCI HAR Dataset","activity_labels.txt")
+        if (!file.exists(activityLabelFile)) {
+            # Try directly in current directory
+            activityLabelFile <- file.path("activity_labels.txt")
+            if (!file.exists(activityLabelFile)) {
+                stop("activity_labels.txt could not be found in the current working directory. 
+                activityLabelFile argument can be specified, to identify the path to the file 
+                detailing the activities performed by the subjects in the data set.") 
+            }
+        }
     }
+    
+    
     # Load the activity labels from files
     activityLabels <- read.table(activityLabelFile, header = FALSE, col.names = c("activity", "activity_name"))
     
     # Pass the features file to be cleaned and returned as a feature of all 
     # the features in the data set
+    rawFeatures <- read.table(featuresFile)
     features <- cleanFeatureLabels(featuresFile)
     
     # Load the training data set's activity identifiers
-    trainActivityFile <- paste(trainDir,"/y_train.txt", sep = "")
+    trainActivityFile <- file.path(trainDir,"y_train.txt")
     trainActivityX <- read.table(trainActivityFile, header = FALSE, col.names = c("activity"))
     trainActivityX <- trainActivityX[,1]
     
     # Load the subject file for the training data set
-    trainSubjectFile <- paste(trainDir,"/subject_train.txt", sep = "")
+    trainSubjectFile <- file.path(trainDir,"subject_train.txt")
     trainSubjectX <- read.table(trainSubjectFile, header = FALSE)
     trainSubjectX <- trainSubjectX[,1]
     
     # Load the training data 
-    trainDataX <- paste(trainDir,"/X_train.txt", sep = "")
+    trainDataX <- file.path(trainDir,"X_train.txt")
     trainX <- read.table(trainDataX, header = FALSE, sep = "", skip = 0, col.names = features[,2])
     
-    # Define all the features that we want to preserve
-    trainX <- trainX[,c(1:6,41:46,81:86,121:126,161:166,201:202,214:215,227:228,240:241,253:254,266:271,345:350,424:429,503:504,516:517,529:530,542:543)]
+    # Search for all the features that we want to preserve
+    trainX <- trainX[,grep("mean\\(\\)|std\\(\\)",rawFeatures$V2)]
     
     # Combine subjects to the data, and merge the data with the activity labels 
     fullTrainX <- data.frame(subject = trainSubjectX, activity = trainActivityX, trainX)
@@ -73,22 +126,21 @@ mergeDataset <- function(trainDir, testDir, featuresFile = NULL, activityLabelFi
     fullTrainX <- fullTrainX[,1:68]
     
     # Load the test data set's activity identifiers
-    testActivityFile <- paste(testDir,"/y_test.txt", sep = "")
+    testActivityFile <- file.path(testDir,"y_test.txt")
     testActivityX <- read.table(testActivityFile, header = FALSE, col.names = c("activity"))
     testActivityX <- testActivityX[,1]
     
     # Load the subject file for the test data set
-    testSubjectFile <- paste(testDir,"/subject_test.txt", sep = "")
+    testSubjectFile <- file.path(testDir,"subject_test.txt")
     testSubjectX <- read.table(testSubjectFile, header = FALSE)
     testSubjectX <- testSubjectX[,1]
     
     # Load the test data 
-    testDataX <- paste(testDir,"/X_test.txt", sep = "")
-    #testX <- read.fwf(testDataX, c(rep.int(16,561)), header = FALSE, sep = "\t", skip = 0, col.names = features[,2])
+    testDataX <- file.path(testDir,"X_test.txt")
     testX <- read.table(testDataX, header = FALSE, sep = "", skip = 0, col.names = features[,2])
     
-    # Define all the features that we want to preserve
-    testX <- testX[,c(1:6,41:46,81:86,121:126,161:166,201:202,214:215,227:228,240:241,253:254,266:271,345:350,424:429,503:504,516:517,529:530,542:543)]
+    # Search for all the features that we want to preserve
+    testX <- testX[,grep("mean\\(\\)|std\\(\\)",rawFeatures$V2)]
     
     # Combine subjects to the data, and merge the data with the activity labels 
     fullTestX <- data.frame(subject = testSubjectX, activity = testActivityX, testX)
@@ -113,7 +165,18 @@ mergeDataset <- function(trainDir, testDir, featuresFile = NULL, activityLabelFi
 #               the feature names more meaningful
 cleanFeatureLabels <- function(featuresFile = NULL) {
     if (is.null(featuresFile)) {
-        stop("Features file is required")
+        # If the path to the featuresFile was not passed in, assume the data set
+        # is in the current working directory and try to find the feature file
+        featuresFile <- file.path("UCI HAR Dataset","features.txt")
+        if (!file.exists(featuresFile)) {
+            # Try directly in current directory
+            featuresFile <- file.path("features.txt")
+            if (!file.exists(featuresFile)) {
+                stop("features.txt could not be found in the current working directory. 
+                     featuresFile argument can be specified, to identify the path to the file 
+                     detailing the features in the data set.")
+            }
+        }
     }
     
     # Load the features file
@@ -144,14 +207,9 @@ cleanFeatureLabels <- function(featuresFile = NULL) {
 createAverageOfMeanSTD <- function(data = NULL, outputFile = "averageOfMeanSTD.txt") {
     if (is.null(data)) {
         stop("data argument is required.  Should be a data frame of means and standard 
-             deviation")
+             deviation data derived from mergeDataset")
     }
-    #R1 <- do.call("rbind", as.list(
-    #    by(data, data["subject"], transform, avg=mean(TimeBodyAcc.std.Y))
-    #))
     cols <- colnames(data)
-    #columns
-    #c(mean(df$TimeBodyAcc.mean.X),mean(df$TimeBodyAcc.mean.Y))
     average <- ddply(data, c("activity","subject"), function(df) { 
         c(mean(df$TimeBodyAcc.mean.X),
           mean(df$TimeBodyAcc.mean.Y), 
@@ -222,8 +280,7 @@ createAverageOfMeanSTD <- function(data = NULL, outputFile = "averageOfMeanSTD.t
           )
         } )
     colnames(average) <- cols
-    average
-    #write.table(average, file = outputFile)
+    write.table(average, file = outputFile)
 }
 
 

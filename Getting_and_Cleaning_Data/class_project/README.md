@@ -23,12 +23,15 @@ UCI.  It will subset the raw data into the features that only contain the mean a
 
    Arguments:  
    
-- trainDir - path to the directory where the training data set for the 
+The mergeDataset will attempt to find the necessary data files in the current working
+directory.  If the data is somewhere else, you can specify the locations as necessary   
+   
+- trainDir (optional) - path to the directory where the training data set for the 
                            UCI Human Activity Recognition project
-- testDir - path to the directory where the test data set is
-- featuresFile - path to the features file detailing all the features
+- testDir (optional) - path to the directory where the test data set is
+- featuresFile (optional) - path to the features file detailing all the features
                                in the data file set
-- activityLabelFile - path to the file that lists all the activities 
+- activityLabelFile (optional) - path to the file that lists all the activities 
                                    performed by the subjects in the study
 
    Returns:    
@@ -45,7 +48,9 @@ UCI.  It will subset the raw data into the features that only contain the mean a
    
    Arguments:  
    
-- featuresFile - path to the file listing all the features in the
+The cleanFeatureLabels will attempt to find the features file in the current working directory.  If the features file is somewhere else, you can specify the location as necessary      
+   
+- featuresFile (optional) - path to the file listing all the features in the
                                data set
    Returns:    
    

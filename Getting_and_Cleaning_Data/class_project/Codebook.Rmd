@@ -86,7 +86,7 @@ The activities and subjects are loaded and then combined with the raw data set.
 
 The data set is then selectively subsetted to return just the features that have data regarding only mean and standard deviation values for each test tracked for each subject and for each activity performed.
 
-[README.md]()
+[https://github.com/leeparayno/R/blob/master/Getting_and_Cleaning_Data/class_project/README.md]()
 
 ##Description of the variables in the averageOfMeanSTD.txt (Or optional outputFile name) file
 
