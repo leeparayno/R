@@ -17,24 +17,23 @@ UCI.  It will subset the raw data into the features that only contain the mean a
 
 ## Functions
 ### mergeDataset - function
-   Purpose:    
+
+**Purpose:**
    
    This function will combine the data sets for the training and test data sets into one combined data frame, with clean feature column names. The data frame will also be subsetted to include the mean and standard deviation values in the original data set, and have all activities labeled descriptively
 
-   Arguments:  
+**Arguments:**  
    
 The mergeDataset will attempt to find the necessary data files in the current working
 directory.  If the data is somewhere else, you can specify the locations as necessary   
    
-- trainDir (optional) - path to the directory where the training data set for the 
-                           UCI Human Activity Recognition project
+- trainDir (optional) - path to the directory where the training data set for the UCI Human Activity Recognition project
 - testDir (optional) - path to the directory where the test data set is
-- featuresFile (optional) - path to the features file detailing all the features
-                               in the data file set
+- featuresFile (optional) - path to the features file detailing all the features in the data file set
 - activityLabelFile (optional) - path to the file that lists all the activities 
                                    performed by the subjects in the study
 
-   Returns:    
+**Returns:**
    
    A data frame that has been properly formated with combined data from the train and test data sets, with cleaned feature names and properly assigned activity labels
    
@@ -42,35 +41,37 @@ directory.  If the data is somewhere else, you can specify the locations as nece
 
 
 ### cleanFeatureLabels - function
-   Purpose:    
+
+**Purpose:**
    
-   This function will clean some of the stray punctuation that could cause issues with other code. It also replaces some abbreviations to make the feature names more meaningful
+This function will clean some of the stray punctuation that could cause issues with other code. It also replaces some abbreviations to make the feature names more meaningful
    
-   Arguments:  
+**Arguments:**
    
 The cleanFeatureLabels will attempt to find the features file in the current working directory.  If the features file is somewhere else, you can specify the location as necessary      
    
 - featuresFile (optional) - path to the file listing all the features in the
                                data set
-   Returns:    
+**Returns:** 
    
-   vector of feature names with no punctuation and more meaniful names
+vector of feature names with no punctuation and more meaniful names
    
 
                
 ### createAverageOfMeanSTD - function
-   Purpose: 
    
-   Process the mean of all the values after grouping by activity and subject
+**Purpose:** 
+   
+Process the mean of all the values after grouping by activity and subject
 
-   Arguments:  
+**Arguments:**
    
 - data (required) - must be a data.frame with all the raw data records as processed by mergeDataset
 - outputFile - optional path to write the summarized data table to a file
 
-   Returns: 
+**Returns:** 
    
-   data.frame of summarized mean values
+data.frame of summarized mean values
    
 
 ### Developer: Lee Parayno
