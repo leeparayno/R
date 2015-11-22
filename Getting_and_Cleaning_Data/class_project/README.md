@@ -62,16 +62,19 @@ vector of feature names with no punctuation and more meaniful names
    
 **Purpose:** 
    
-Process the mean of all the values after grouping by activity and subject
+Process the mean of all the values after grouping by activity and subject and create an output file of the mean all the sampled mean and standard deviation sample data.
 
 **Arguments:**
    
 - data (required) - must be a data.frame with all the raw data records as processed by mergeDataset
-- outputFile - optional path to write the summarized data table to a file
+- outputFile - (default - averageOfMeanSTD.txt) optional path to write the summarized data table to a file
 
 **Returns:** 
    
-data.frame of summarized mean values
-   
+Output file will be created from data.frame of summarized mean values
+
+See the Codebook for detailed information regarding the returned:
+
+[https://github.com/leeparayno/R/blob/master/Getting_and_Cleaning_Data/class_project/Codebook.Rmd]()
 
 ### Developer: Lee Parayno
