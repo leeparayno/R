@@ -1,0 +1,18 @@
+{
+    "contents" : "rankhospital <- function(state, outcome, num = \"best\") {\r    ## Read outcome data\r    outcomeData <- read.csv(\"rprog-data-ProgAssignment3-data/outcome-of-care-measures.csv\", colClasses = \"character\")\r    \r    ## Convert to numeric numbers\r    outcomeData[,11] <- as.numeric(outcomeData[,11])\r    outcomeData[,17] <- as.numeric(outcomeData[,17])\r    outcomeData[,23] <- as.numeric(outcomeData[,23])    \r    \r    ## Check that state and outcome are valid    \r    states <- outcomeData[,7]\r    statesWithData <- unique(states)\r    \r    validOutcomes <- c(\"heart attack\", \"heart failure\", \"pneumonia\")\r    \r    if (!(state %in% statesWithData)) {\r        stop(\"invalid state\")\r    } else {\r        outcomeData <- outcomeData[outcomeData$State == state,]\r    }\r    if (!(outcome %in% validOutcomes)) {\r        stop(\"invalid outcome\")\r    } else {\r        ## Need to order the data frame by the outcome specified\r        if (outcome == \"heart attack\") {\r            valid <- outcomeData[,11] != \"Not Available\"\r            outcomeData <- outcomeData[valid,]\r            outcomeDetails <- outcomeData[order(outcomeData[,11], outcomeData[,2], na.last = NA),]\r        } else if (outcome == \"heart failure\") {\r            valid <- outcomeData[,17] != \"Not Available\"\r            outcomeData <- outcomeData[valid,]\r            outcomeDetails <- outcomeData[order(outcomeData[,17], outcomeData[,2], na.last = NA),]\r        } else if (outcome == \"pneumonia\") {\r            valid <- outcomeData[,23] != \"Not Available\"\r            outcomeData <- outcomeData[valid,]\r            outcomeDetails <- outcomeData[order(outcomeData[,23], outcomeData[,2], na.last = NA),]\r        }\r    }    \r    \r    #cols <- c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, \r    #          TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE,\r    #          FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,\r    #          FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,\r    #          FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)\r    #outcomeDetails <- outcomeDetails[,cols]    \r    if (is.character(num)) {\r        if (num == \"best\") {\r            results <- outcomeDetails[1,2]        \r        } else if (num == \"worst\") {\r            results <- outcomeDetails[length(outcomeDetails[,1]),2]        \r        }\r    } else if (is.numeric(num) && length(num) == 1) {\r        if (num > length(outcomeDetails[,1])) {\r            results <- NA\r        } else {\r            results <- outcomeDetails[num,2]            \r        }\r    } else if (is.vector(num)) {\r        results <- outcomeDetails[num,2]\r    }\r    results\r    #outcomeDetails[1,2]\r    ## Return hospital name in that state with the given rank\r    ## 30-day death rate\r    \r}\r",
+    "created" : 1446003538769.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1731734804",
+    "id" : "E8F4249B",
+    "lastKnownWriteTime" : 1446047369,
+    "path" : "~/git/R/week4/rankhospital.R",
+    "project_path" : "rankhospital.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : true,
+    "type" : "r_source"
+}

@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1446008596034.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6AAEC47E",
+    "lastKnownWriteTime" : 4299745280,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "i85ehrmbol",
+        "caption" : "outcome",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=outcome&cache_key=i85ehrmbol",
+        "displayedObservations" : 4706,
+        "environment" : "",
+        "object" : "outcome",
+        "totalObservations" : 4706,
+        "variables" : 46
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,814 @@
+---
+title: "UCI Human Activity Recognition Summary Tools"
+author: "Lee Parayno"
+date: "11/21/2015"
+output:
+  html_document:
+    keep_md: yes
+---
+
+## Project Description
+
+The UCI Human Activity Recognition project performed some tests involving Samsung
+smartphones, gathering data provided by subject individuals performing a variety 
+of activities--with the smartphones providing various sensor data that was available
+
+The data set is available here:
+
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+
+This project provides a set of functions for processing the raw data set provided by 
+UCI.  One of the functions, will merge and clean the train and test data sets together.
+A supporting function will clean and format the feature names.  A second supporting function will summarize the mean values for each subject and activity for all the mean 
+and standard deviation features.
+
+##Study design and data processing
+
+
+
+###Collection of the raw data
+
+There were 30 test subjects in the study, all aged 19-48 years old.  Each person was directed to perform 6 different activities:
+
+- walking
+- walking upstairs
+- walking downstairs
+- sitting
+- standing
+- laying
+
+While performing the activity, each subject was wearing a smartphone, a Samsung Galaxy S II, on the waist.
+
+Using the following sensors on the smartphone, embedded accelerometer and gyroscope, data was captured for:
+
+- 3-axial linear acceleration
+- 3-axial angular velocity
+
+Each was sampled at a constant rate of 50hz.
+
+### Notes on the original (raw) data 
+
+In the original data set, the raw data has be separated from the following related data into separate files:
+
+- subject identifiers
+- activities
+- activity labels
+- feature labels
+
+##Creating the tidy datafile
+
+###Guide to create the tidy data file
+
+To create the clean data into one complete data set of the features that contain mean and standard deviation, as well as a summarized data set grouped by activity and subject, follow the following steps.
+
+1. Download the raw data set from UCI:
+[http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones]
+2. Install R, and required libraries.
+
+These functions will require the following R libraries:
+
+- dplyr
+- plyr
+
+3. Execute the functions in run_analysis.R:
+
+- mergeDataset - Will create a data frame with a subset of the features containing only the data for mean and standard deviation, with combined training and test data in one data frame
+- createAverageOfMeanSTD - To create an output file of summarized mean calculations of the data grouped by activity and subject
+
+
+###Cleaning of the data
+
+The script will perform various functions to clean the data to allow calculations to be performed on the data.
+
+The features file is loaded and then parsed and cleaned for removal of some punctuation and to put meaningful names for some abbreviations in the original data set.
+
+The activities and subjects are loaded and then combined with the raw data set.
+
+The data set is then selectively subsetted to return just the features that have data regarding only mean and standard deviation values for each test tracked for each subject and for each activity performed.
+
+[README.md]()
+
+##Description of the variables in the averageOfMeanSTD.txt (Or optional outputFile name) file
+
+General description of the file including:
+ - Resulting summary file will have 180 rows pertaining to each permutationof 30 subjects with 6 performed activities - with the summarized values for 66 mean and standard deviation features
+ - The data will provide a mean of the all the test result data after grouping for each subject and for each activity performed
+ 
+###activity
+
+Each subject was asked to perform 6 activities while data was tracked on a Samsung smartphone.  
+
+Class: Factor
+
+Values include: 
+
+- WALKING
+- WALKING_UPSTAIRS
+- WALKING_DOWNSTAIRS
+- SITTING
+- STANDING
+- LAYING
+
+Unit of Measurement: N/A
+
+###subject
+
+Subjects were identified with a number (integer) for each of the volunteers
+
+Class: Integer
+
+Values: 1-30 (30 Subjects total in the study)
+
+Unit of Measurement: N/A
+
+## Naming Convention (Features)
+
+The following features have a name with 4 levels of descriptors. 
+
+The first is either "Time" or "Freq" (Freqency).  For each vector of features, variables were calculated in the time domain or in the frequency domain, after processing.
+
+The second part describes whether the "Body" or "Grav" (Gravity) motion components were the sources to derive body acceleration and gravity.
+
+The third part describes whether the "Acc" or "Gyro" - for when the Accelerometer was used to derive linear acceleration, or the gyroscope was used to derive rotational acceleration. Part of the naming convention for this appears at the end, in the form of  "-X" or "-Y" or "-Z" to denote the axis of acceleration where applicable.
+
+The fourth part of describe whether the feature pertains to the "mean" or "standard deviation"
+
+
+###TimeBodyAcc.mean.X
+
+Time of estimated linear acceleration from the body motion component on the X-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyAcc.mean.Y
+
+Time of estimated linear acceleration from the body motion component on the Y-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyAcc.mean.Z
+
+Time of estimated linear acceleration from the body motion component on the Z-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyAcc.std.X
+
+Time of estimated linear acceleration from the body motion component on the X-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyAcc.std.Y
+
+Time of estimated linear acceleration from the body motion component on the Y-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyAcc.std.Z
+
+Time of estimated linear acceleration from the body motion component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeGravityAcc.mean.X
+
+Time of estimated linear acceleration from the gravitational motion component on the X-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeGravityAcc.mean.Y
+
+Time of estimated linear acceleration from the gravitational motion component on the Y-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeGravityAcc.mean.Z
+
+Time of estimated linear acceleration from the gravitational motion component on the Z-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeGravityAcc.std.X
+
+Time of estimated linear acceleration from the gravitational motion component on the X-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeGravityAcc.std.Y
+
+Time of estimated linear acceleration from the gravitational motion component on the Y-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeGravityAcc.std.Z
+
+Time of estimated linear acceleration from the gravitational motion component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyAccJerk.mean.X
+
+Time of estimated jolt, surge, or lurch rate of linear acceleration change on the X-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyAccJerk.mean.Y
+
+Time of estimated jolt, surge, or lurch rate of linear acceleration change on the Y-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyAccJerk.mean.Z
+
+Time of estimated jolt, surge, or lurch rate of linear acceleration change on the Z-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyAccJerk.std.X
+
+Time of estimated jolt, surge, or lurch rate of linear acceleration change on the X-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyAccJerk.std.Y
+
+Time of estimated jolt, surge, or lurch rate of linear acceleration change on the Y-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyAccJerk.std.Z
+
+Time of estimated jolt, surge, or lurch rate of linear acceleration change on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyGyro.mean.X
+
+Time of body rotational movement from the gyroscope motion component on the X-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyro.mean.Y
+
+Time of body rotational movement from the gyroscope motion component on the Y-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyro.mean.Z
+
+Time of body rotational movement from the gyroscope motion component on the Z-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyro.std.X
+
+Time of body rotational movement from the gyroscope motion component on the X-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyro.std.Y
+
+Time of body rotational movement from the gyroscope motion component on the Y-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyro.std.Z
+
+Time of body rotational movement from the gyroscope motion component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyroJerk.mean.X
+
+Time of body movement in a jolt, surge, or lurch rate of rotational acceleration from the gyroscope motion component on the X-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyGyroJerk.mean.Y
+
+Time of body movement in a jolt, surge, or lurch rate of rotational acceleration from the gyroscope motion component on the Y-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyGyroJerk.mean.Z
+
+Time of body movement in a jolt, surge, or lurch rate of rotational acceleration from the gyroscope motion component on the Z-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyGyroJerk.std.X
+
+Time of body movement in a jolt, surge, or lurch rate of rotational acceleration from the gyroscope motion component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyGyroJerk.std.Y
+
+Time of body movement in a jolt, surge, or lurch rate of rotational acceleration from the gyroscope motion component on the Y-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyGyroJerk.std.Z
+
+Time of body movement in a jolt, surge, or lurch rate of rotational acceleration from the gyroscope motion component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyAccMag.mean
+
+Time of body movement linear acceleration magnitude of the signal - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyAccMag.std
+
+Time of body movement linear acceleration magnitude of the signal - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeGravityAccMag.mean
+
+Time of gravity movement linear acceleration magnitude of the signal - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeGravityAccMag.std
+
+Time of gravity movement linear acceleration magnitude of the signal - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyAccJerkMag.mean
+
+Time of body movement in a jolt, surge, or lurch rate of rotational acceleration from the body motion component with the magnitude of the signal - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyAccJerkMag.std
+
+Time of body movement in a jolt, surge, or lurch rate of rotational acceleration from the body motion component with the magnitude of the signal - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyGyroMag.mean
+
+Time of body rotational movement from the gyroscope motion component with the magnitude of the signal - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyroMag.mean
+
+Time of body rotational movement from the gyroscope motion component with the magnitude of the signal - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyroMag.std
+
+Time of body rotational movement from the gyroscope motion component with the magnitude of the signal - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: seconds
+
+###TimeBodyGyroJerkMag.mean
+
+Time of body rotational movement in a jolt, surge, or lurch rate of rotational acceleration from the gyroscope motion component with the magnitude of the signal - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###TimeBodyGyroJerkMag.std
+
+Time of body rotational movement in a jolt, surge, or lurch rate of rotational acceleration from the gyroscope motion component with the magnitude of the signal - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: m/s^3 ( meters over seconds^3)
+
+###FreqBodyAcc.mean.X
+
+Frequency of body linear acceleration from the body motion component on the X-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAcc.mean.Y
+
+Frequency of body linear acceleration from the body motion component on the Y-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAcc.mean.Z
+
+Frequency of body linear acceleration from the body motion component on the Z-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAcc.std.X
+
+Frequency of body linear acceleration from the body motion component on the X-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAcc.std.Y
+
+Frequency of body linear acceleration from the body motion component on the Y-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAcc.std.Z
+
+Frequency of body linear acceleration from the body motion component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAccJerk.mean.X
+
+Frequency of body linear acceleration in a jolt, surge, or lurch rate from the body motion component on the X-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAccJerk.mean.Y
+
+Frequency of body linear acceleration in a jolt, surge, or lurch rate from the body motion component on the Y-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAccJerk.mean.Z
+
+Frequency of body linear acceleration in a jolt, surge, or lurch rate from the body motion component on the Z-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAccJerk.std.X
+
+Frequency of body linear acceleration in a jolt, surge, or lurch rate from the body motion component on the X-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAccJerk.std.Y
+
+Frequency of body linear acceleration in a jolt, surge, or lurch rate from the body motion component on the Y-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAccJerk.std.Z
+
+Frequency of body linear acceleration in a jolt, surge, or lurch rate from the body motion component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyGyro.mean.X
+
+Frequency of body rotational acceleration from the body gyroscope component on the X-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyGyro.mean.Y
+
+Frequency of body rotational acceleration from the body gyroscope component on the Y-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyGyro.mean.Z
+
+Frequency of body rotational acceleration from the body gyroscope component on the Z-axis - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyGyro.std.X
+
+Frequency of body rotational acceleration from the body gyroscope component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyGyro.std.Y
+
+Frequency of body rotational acceleration from the body gyroscope component on the Y-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyGyro.std.Z
+
+Frequency of body rotational acceleration from the body gyroscope component on the Z-axis - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAccMag.mean
+
+Frequency of body linear acceleration from the body motion component with the magnitude - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyAccMag.std
+
+Frequency of body linear acceleration from the body motion component with the magnitude - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyBodyAccJerkMag.mean
+
+Frequency of body linear acceleration in a jolt, surge, or lurch rate from the body motion component with the magnitude - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyBodyAccJerkMag.std
+
+Frequency of body linear acceleration in a jolt, surge, or lurch rate from the body motion component with the magnitude - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyBodyGyroMag.mean
+
+Frequency of body to body rotational acceleration gyroscope component with the magnitude - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyBodyGyroMag.std
+
+Frequency of body to body rotational acceleration gyroscope component with the magnitude - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyBodyGyroJerkMag.mean
+
+Frequency of body to body rotational acceleration gyroscope component in a jolt, surge, or lurch rate  with the magnitude - mean of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+###FreqBodyBodyGyroJerkMag.std
+
+Frequency of body to body rotational acceleration gyroscope component in a jolt, surge, or lurch rate  with the magnitude - standard deviation of sampled data
+
+Class: Numeric
+
+Values: Floating point value
+
+Unit of Measurement: Hz
+
+##Sources
+
+Jerk (physics)
+[https://en.wikipedia.org/wiki/Jerk_(physics)]
+
+Inertial Measurement Unit
+[https://en.wikipedia.org/wiki/Inertial_measurement_unit]
+

@@ -1,0 +1,17 @@
+{
+    "contents" : "pollutantmean <- function(directory, pollutant, id = 1:332) {\n    ## 'directory' is a character vector of length 1 indicating\n    ## the location of the CSV files\n  \n    ## 'pollutant' is a character vector of length 1 indicating\n    ## the name of the pollutant for which we will calculate the\n    ## mean; either \"sulfate\" or \"nitrate\".\n  \n    ## 'id' is an integer vector indicating the monitor ID numbers\n    ## to be used\n        \n    ## Return the mean of the pollutant across all monitors list\n    ## in the 'id' vector (ignoring NA values)\n    ## NOTE: Do not round the result!\n    totalMean <- c()\n    allEntries <- c()\n    for (monitor in id) {\n        if (monitor < 10) {\n            monitorFile <- paste(\"00\",monitor, sep = \"\")\n        } else if (monitor < 100) {\n            monitorFile <- paste(\"0\",monitor, sep = \"\")\n        } else {\n            monitorFile <- monitor\n        }   \n        fileComp <- paste(directory,\"/\",monitorFile,\".csv\",sep = \"\")\n        ##print(fileComp)\n        if (file.exists(fileComp) == TRUE) {\n            monitorDate <- read.csv(fileComp, header = TRUE, sep = \",\")    \n        } else {\n            monitorDate <- c()\n        }\n        \n        if (pollutant == \"sulfate\") {\n            entries <- monitorDate[,2]\n        } else if (pollutant == \"nitrate\") {\n            entries <- monitorDate[,3]\n        } else {\n            ## Not a valid pollutant in the data files\n            entries <- c()\n        }\n        if (length(entries) > 0) {\n            notvalid <- is.na(entries)\n            goodEntries <- entries[!notvalid]\n            ##totalMean <- append(totalMean,mean(goodEntries))\n            allEntries <- append(allEntries, goodEntries)\n        }    \n        ##totalMean\n        allEntries\n        ##allEntries <- append(allEntries, goodEntries)\n    }\n    ##mean(allEntries)\n    avg <- if (length(allEntries) > 0) {\n        mean(allEntries)\n    } else {\n        NA\n    }\n    avg\n}",
+    "created" : 1444807812819.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3801998037",
+    "id" : "E3E1B9C4",
+    "lastKnownWriteTime" : 1444839624,
+    "path" : "~/git/R/week2/pollutantmean.R",
+    "project_path" : "pollutantmean.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

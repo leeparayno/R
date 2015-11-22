@@ -1,0 +1,18 @@
+{
+    "contents" : "",
+    "created" : 1445271370616.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "7B1FCD13",
+    "lastKnownWriteTime" : 4331864070,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "context" : "debugging:::ls"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "type" : "r_code_browser"
+}

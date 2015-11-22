@@ -1,0 +1,18 @@
+{
+    "contents" : "test = function(mat){\n    ## @mat: an invertible matrix\n    \n    temp = makeCacheMatrix(mat)\n    \n    start.time = Sys.time()\n    cacheSolve(temp)\n    dur = Sys.time() - start.time\n    print(dur)\n    \n    start.time = Sys.time()\n    cacheSolve(temp)\n    dur = Sys.time() - start.time\n    print(dur)\n}",
+    "created" : 1445405192123.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "416486727",
+    "id" : "E3261269",
+    "lastKnownWriteTime" : 1445405203,
+    "path" : "~/git/R/week3/test.R",
+    "project_path" : "test.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

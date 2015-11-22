@@ -1,0 +1,17 @@
+{
+    "contents" : "## best - find the hospital in the state, with the best (ie. lowest) 30-day\n## mortality rate for specified outcome\n\nbest <- function(state, outcome) {\n    ## Read outcome data\n    outcomeData <- read.csv(\"rprog-data-ProgAssignment3-data/outcome-of-care-measures.csv\", colClasses = \"character\")\n    \n    ## Convert to numeric numbers\n    outcomeData[,11] <- as.numeric(outcomeData[,11])\n    outcomeData[,17] <- as.numeric(outcomeData[,17])\n    outcomeData[,23] <- as.numeric(outcomeData[,23])\n    \n    ## Check that state and outcome are valid\n    states <- outcomeData[,7]\n    statesWithData <- unique(states)\n    \n    validOutcomes <- c(\"heart attack\", \"heart failure\", \"pneumonia\")\n    \n    if (!(state %in% statesWithData)) {\n        stop(\"invalid state\")\n    } else {\n        outcomeData <- outcomeData[outcomeData$State == state,]\n    }\n    if (!(outcome %in% validOutcomes)) {\n        stop(\"invalid outcome\")\n    } else {\n        if (outcome == \"heart attack\") {\n            ## outcomeDetails <- as.numeric(outcomeData[,11])\n            outcomeDetails <- outcomeData[order(outcomeData[,11], outcomeData[,2]),]\n        } else if (outcome == \"heart failure\") {\n            outcomeDetails <- outcomeData[order(outcomeData[,17], outcomeData[,2]),]#as.numeric(outcomeData[,17])\n        } else if (outcome == \"pneumonia\") {\n            outcomeDetails <- outcomeData[order(outcomeData[,23], outcomeData[,2]),]#as.numeric(outcomeData[,23])\n        }\n        \n        \n    }\n    outcomeDetails[1,2]\n    #outcomeDetails[1:5,]\n    #cols <- c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, \n    #          TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE,\n    #          FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,\n    #          FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,\n    #          FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)\n    #outcomeDetails[1:5,cols]\n    ## Return hospital name in that state with lowest 30-day death\n    ## rate    \n}",
+    "created" : 1446000042756.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "901066602",
+    "id" : "83ACF0A3",
+    "lastKnownWriteTime" : 1446003174,
+    "path" : "~/git/R/week4/best.R",
+    "project_path" : "best.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : true,
+    "type" : "r_source"
+}

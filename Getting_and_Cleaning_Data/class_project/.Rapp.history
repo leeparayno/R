@@ -1,0 +1,16 @@
+install.packages("slidify")
+install.packages(c("slidify","ggplot2","devtools")
+)
+install.packages(c("lubridate","kernlab","gbm")
+)
+install.packages("KernSmooth")
+library(KernSmooth)
+img.n <- readJPEG(system.file("img", "~/git/R/Getting_and_Cleaning_Data/03_quiz/jpeg/jeff.jpg", package="jpeg"), TRUE)
+readJPEG
+install.packages("jpeg")
+readJPEG
+img <- readJPEG()
+pwd
+load("run_analysis.R")
+load("run_analysis.R")
+load("run_analysis.R")

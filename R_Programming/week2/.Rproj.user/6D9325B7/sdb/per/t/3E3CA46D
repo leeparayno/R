@@ -1,0 +1,18 @@
+{
+    "contents" : "complete <- function(directory, id = 1:332) {\n    ## 'directory' is a character vector of length 1 indicating\n    ## the location of the CSV files\n    \n    ## 'id' is an integer vector indicating the monitor ID numbers\n    ## to be used\n    \n    ## Return a data frame of the form:\n    ## id nobs\n    ## 1  117\n    ## 2  1041\n    ## ...\n    ## where 'id' is the monitor ID number and 'nobs' is the\n    ## number of complete cases\n    totalCount <- 0\n    monitorCountDetails <- c()\n    for (monitor in id) {\n        if (monitor < 10) {\n            monitorFile <- paste(\"00\",monitor, sep = \"\")\n        } else if (monitor < 100) {\n            monitorFile <- paste(\"0\",monitor, sep = \"\")\n        } else {\n            monitorFile <- monitor\n        }   \n        fileComp <- paste(directory,\"/\",monitorFile,\".csv\",sep = \"\")\n        ##print(fileComp)\n        if (file.exists(fileComp) == TRUE) {\n            monitorDate <- read.csv(fileComp, header = TRUE, sep = \",\")    \n            comp <- complete.cases(monitorDate)        \n            compCount <- table(comp)[2]            \n        } else {\n            monitorDate <- c()\n            compCount <- 0\n        }\n        \n        monitorCount <- c(monitor, compCount)\n        \n        monitorCountDetails <- append(monitorCountDetails, monitorCount)\n        \n        ##totalMean\n        #totalCount <- totalCount + compCount\n        ##allEntries <- append(allEntries, goodEntries)\n    }\n    ##mean(allEntries)\n    #print(monitorCountDetails)\n    monitorCountDetails\n#     if (length(monitorCountDetails) > 0) {\n#         print(paste(\"dimensions of monitorCountDetails:\",dim(monitorCountDetails)[1]))\n         \n#         print(paste(\"size:\",size))\n#         size\n#         if (!is.null(size)) {\n             monComplete <- matrix(monitorCountDetails,ncol = 2,byrow = TRUE)\n             size <- dim(monComplete)[1]\n             cnames <- c(\"id\", \"nobs\")\n             colnames(monComplete) <- cnames\n             rownames(monComplete) <- c(1:size)\n#         } else {\n#             monComplete <- c()\n#         }            \n#     } else {\n#         monComplete <- c()\n#     }    \n     monComplete\n     as.data.frame(monComplete)\n    \n}",
+    "created" : 1444839707615.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3718486065",
+    "id" : "3E3CA46D",
+    "lastKnownWriteTime" : 1444878611,
+    "path" : "~/git/R/week2/complete.R",
+    "project_path" : "complete.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
