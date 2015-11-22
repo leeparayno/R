@@ -13,7 +13,7 @@ http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartpho
 ## Project Description
 
 This project provides a set of functions for processing the raw data set provided by 
-UCI.
+UCI.  It will subset the raw data into the features that only contain the mean and standard deviation values for the sampled data.  It will also process the subject and activities to bind them to the raw data.  In addition, feature names will be assigned to the data set.  This will process both the training and test data sets and combine them into one set of data.
 
 ## Functions
 ### mergeDataset - function
